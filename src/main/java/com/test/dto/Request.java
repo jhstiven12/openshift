@@ -1,64 +1,62 @@
 package com.test.dto;
 
-import javax.validation.constraints.Size;
-
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
 @JsonAutoDetect
 @JsonSerialize
-@ApiModel(description = "Request DTO Object")
+@ApiModel(description = "Request de Ejemplo para servicios de prueba Openshift")
 public class Request {
-    
+	
+	@JsonProperty("id")
+    @ApiModelProperty(dataType = "String")
+    private String id;
+	
     @JsonProperty("name")
     @ApiModelProperty(dataType = "String")
-    @Size(min = 10, max = 45)
     private String name;
     
-
-    @JsonProperty("document")
+    @JsonProperty("duration")
     @ApiModelProperty(dataType = "String")
-    @Size(min = 10, max = 45)
-    private String document;
-
-
-	
-
-
-	public Request() {
-		super();
+    private String duration;
+    
+    @JsonProperty("dateInit")
+    @ApiModelProperty(dataType = "String")
+    private String dateInit;
+    
+	public String getId() {
+		return id;
 	}
 
-	public Request(String name, String document) {
-		super();
-		this.name = name;
-		this.document = document;
+	public void setId(String id) {
+		this.id = id;
 	}
-	
-
 
 	public String getName() {
 		return name;
 	}
 
-
 	public void setName(String name) {
 		this.name = name;
 	}
 
-
-	public String getDocument() {
-		return document;
+	public String getDuration() {
+		return duration;
 	}
 
-
-	public void setDocument(String document) {
-		this.document = document;
+	public void setDuration(String duration) {
+		this.duration = duration;
 	}
-    
-    
+
+	public String getDateInit() {
+		return dateInit;
+	}
+
+	public void setDateInit(String dateInit) {
+		this.dateInit = dateInit;
+	}
+
 }

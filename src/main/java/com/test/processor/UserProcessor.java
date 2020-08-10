@@ -12,12 +12,10 @@ import com.test.dto.Request;
 @Component
 public class UserProcessor implements Processor {
 	private List<Request> listUser = new ArrayList<Request>();
-	
-	
-	
+
 	@Override
 	public void process(Exchange exchange) throws Exception {
-		
+
 		List<Request> list = new ArrayList<Request>();
 
 		switch (String.valueOf(exchange.getProperty("serviceRest"))) {
@@ -33,7 +31,7 @@ public class UserProcessor implements Processor {
 			List<Request> listUpdate = new ArrayList<>(listUser);
 			int iu = 0;
 			for (Request request : listUser) {
-				if (request.getDocument().equals(documentUP)) {
+				if (request.getId().equals(documentUP)) {
 					request = (Request) exchange.getIn().getBody();
 					listUpdate.set(iu, request);
 				}
@@ -48,7 +46,7 @@ public class UserProcessor implements Processor {
 			List<Request> listDelete = new ArrayList<>(listUser);
 			int i = 0;
 			for (Request request : listUser) {
-				if (request.getDocument().equals(documentDE)) {
+				if (request.getId().equals(documentDE)) {
 					listDelete.remove(i);
 				}
 				i++;
@@ -60,7 +58,7 @@ public class UserProcessor implements Processor {
 		case "list":
 			String documentLI = String.valueOf(exchange.getIn().getHeader("document"));
 			for (Request request : listUser) {
-				if (request.getDocument().equals(documentLI)) {
+				if (request.getId().equals(documentLI)) {
 					list.add(request);
 					break;
 				}
