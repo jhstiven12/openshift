@@ -3,10 +3,9 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.test</groupId>
 	<artifactId>test2</artifactId>
-	<version>1.0.0.0-SNAPSHOT</version>
-	<name>Spring-Boot :: Camel CXF Rest Swagger ::</name>
-	<description>Spring Boot example running a Camel route defined in XML</description>
-
+	<version>1.0.0-SNAPSHOT</version>
+	<name>Spring-Boot :: Camel Rest Example::</name>
+	<description>Spring Boot:Rest example with Openshift 3SCALE, KEYCLOACK , SSO</description>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
@@ -14,14 +13,12 @@
 		<fabric8.version>3.0.12</fabric8.version>
 		<!-- versions of Maven plugins -->
 		<fabric8.maven.plugin.version>3.5.33.fuse-000089-redhat-4</fabric8.maven.plugin.version>
-
 		<version.maven-compiler-plugin>3.7.0</version.maven-compiler-plugin>
 		<version.maven-resources-plugin>3.1.0</version.maven-resources-plugin>
 		<version.maven-surefire-plugin>3.0.0-M3</version.maven-surefire-plugin>
 		<maven.compiler.source>1.8</maven.compiler.source>
 		<maven.compiler.target>1.8</maven.compiler.target>
 		<swagger-ui.version>3.20.0</swagger-ui.version>
-
 		<spring-cloud.version>2.0.4.BUILD-SNAPSHOT</spring-cloud.version>
 	</properties>
 
@@ -34,13 +31,6 @@
 				<type>pom</type>
 				<scope>import</scope>
 			</dependency>
-			<!-- <dependency> -->
-			<!-- <groupId>org.springframework.cloud</groupId> -->
-			<!-- <artifactId>spring-cloud-dependencies</artifactId> -->
-			<!-- <version>${spring-cloud.version}</version> -->
-			<!-- <type>pom</type> -->
-			<!-- <scope>import</scope> -->
-			<!-- </dependency> -->
 		</dependencies>
 	</dependencyManagement>
 

@@ -20,7 +20,7 @@ import io.swagger.annotations.Api;
 /**
  * 
  * @author Assert Solutions S.A.S
- *
+ * @description Servicio de prueba 
  */
 @Component
 @Api(value = "Initial Proyect Camel-REST", description = "Estrucutura Basica Proyecto Rest Y Camel")
@@ -48,17 +48,26 @@ public class RestDslMainRoute extends RouteBuilder {
             .apiProperty("api.title",  env.getProperty("api.title"))
             .apiProperty("api.version", env.getProperty("api.version"));
         
-        rest("/hello-service").description(env.getProperty("api.description"))
+        rest("/example-openshift").description(env.getProperty("api.description"))
             .consumes("application/json")
             .produces("application/json")
         
-        .get().description(env.getProperty("api.description.service")).outType(Response.class)
+         .get().description(env.getProperty("api.description.service")).outType(Response.class)
             .responseMessage().code(200).message("All users successfully returned").endResponseMessage()
             .to("direct:update-user")
          .post().description(env.getProperty("api.description.service")).type(Request.class).description(
-                 env.getProperty("api.description.input.post")).outType(Response.class) 
+             env.getProperty("api.description.input.post")).outType(Response.class) 
              .responseMessage().code(200).message("All users successfully created").endResponseMessage()
-             .to("direct:update-user");
+             .to("direct:update-user")
+         .put().description(env.getProperty("api.description.service")).type(Request.class).description(
+             env.getProperty("api.description.input.post")).outType(Response.class) 
+             .responseMessage().code(200).message("All users successfully created").endResponseMessage()
+             .to("direct:update-user")
+         .delete().description(env.getProperty("api.description.service")).type(Request.class).description(
+             env.getProperty("api.description.input.post")).outType(Response.class) 
+             .responseMessage().code(200).message("All users successfully created").endResponseMessage()
+             .to("direct:update-user")
+             ;
        
         from("direct:update-user")
             .bean(ResponseHandler.class)
