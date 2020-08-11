@@ -14,7 +14,7 @@ public class ResponseHandler {
     @ApiModelProperty(notes = "Parametro De Salida")
     public Response handler() {
 	Response dto = new Response();
-	dto.setParam("Hello");
+	dto.setParam("Operación realizada con Exito!");
 	return dto;
     }
 }

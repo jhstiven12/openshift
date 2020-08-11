@@ -48,86 +48,50 @@ public class RestDslMainRoute extends RouteBuilder {
             .apiProperty("api.title",  env.getProperty("api.title"))
             .apiProperty("api.version", env.getProperty("api.version"));
         
-        rest("/example-openshift").description(env.getProperty("api.description"))
+        rest("/example-openshift/{document}").description(env.getProperty("api.description"))
             .consumes("application/json")
             .produces("application/json")
         
          .get().description(env.getProperty("api.description.service")).outType(Response.class)
             .responseMessage().code(200).message("All users successfully returned").endResponseMessage()
-            .to("direct:update-user")
+            .to("direct:listAllUsers")
          .post().description(env.getProperty("api.description.service")).type(Request.class).description(
              env.getProperty("api.description.input.post")).outType(Response.class) 
              .responseMessage().code(200).message("All users successfully created").endResponseMessage()
-             .to("direct:update-user")
+             .to("direct:createUser")
          .put().description(env.getProperty("api.description.service")).type(Request.class).description(
              env.getProperty("api.description.input.post")).outType(Response.class) 
+	         .param()
+				.dataType("string")
+				.name("document")
+				.type(RestParamType.path)
+			 .endParam()
              .responseMessage().code(200).message("All users successfully created").endResponseMessage()
-             .to("direct:update-user")
+             .to("direct:updateUser")
          .delete().description(env.getProperty("api.description.service")).type(Request.class).description(
-             env.getProperty("api.description.input.post")).outType(Response.class) 
+             env.getProperty("api.description.input.post")).outType(Response.class)
+         	.param()
+         		.dataType("string")
+         		.name("document")
+         		.type(RestParamType.path)
+     		 .endParam()
              .responseMessage().code(200).message("All users successfully created").endResponseMessage()
-             .to("direct:update-user")
+             .to("direct:delete-user")
              ;
-       
-        from("direct:update-user")
-            .bean(ResponseHandler.class)
-            .log(LoggingLevel.INFO,log,"Body: ${body}")
-            .setHeader("Content-Type", simple("application/json"))
-            .setHeader("Accept", simple("application/json"))
-            .log(LoggingLevel.INFO,log,"Response Body: ${body}");
-        
-        
-        rest()
-        	.tag("/get/user")
-        	.description("Api que contiene los servicios para consulta de usuarios")
-        	.get("/get")
-        		.to("direct:listAllUsers")
-        	.get("/get/{document}")
-        		.param()
-        			.dataType("string")
-        			.name("document")
-        			.type(RestParamType.path)
-        		.endParam()
-        		.to("direct:listUser");
-        
-        rest()
-    		.tag("/post/user")
-    		.description("Api que contiene los servicios para consulta de usuarios")
-    		.post("/post")
-    			.type(Request.class)
-    			.to("direct:createUser");
-        rest()
-	        .tag("/update/user")
-	        .description("Api que contiene los servicios para consulta de usuarios")
-	        .put("/put/{document}")
-	        	.type(Request.class)
-		        .param()
-					.dataType("string")
-					.name("document")
-					.type(RestParamType.path)
-				.endParam()
-				
-				.to("direct:updateUser");
-        rest()
-	        .tag("/delete")
-	        .description("Api que contiene los servicios para consulta de usuarios")
-	        .delete("delete/{document}")
-		        .param()
-					.dataType("string")
-					.name("document")
-					.type(RestParamType.path)
-				.endParam()
-				.to("direct:deleteUser");
+  
         
         from("direct:createUser")
         	.setProperty("serviceRest", simple("create"))
-        	.process("userProcessor");
+        	.process("userProcessor")
+        	.bean(ResponseHandler.class);
         from("direct:updateUser")
         	.setProperty("serviceRest", simple("update"))
-        	.process("userProcessor");
+        	.process("userProcessor")
+        	.bean(ResponseHandler.class);
         from("direct:deleteUser")
         	.setProperty("serviceRest", simple("delete"))
-        	.process("userProcessor");
+        	.process("userProcessor")
+        	.bean(ResponseHandler.class);
         from("direct:listUser")
         	.setProperty("serviceRest", simple("list"))
         	.process("userProcessor");
