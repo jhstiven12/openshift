@@ -48,18 +48,19 @@ public class RestDslMainRoute extends RouteBuilder {
             .apiProperty("api.title",  env.getProperty("api.title"))
             .apiProperty("api.version", env.getProperty("api.version"));
         
-        rest("/example-openshift/{document}").description(env.getProperty("api.description"))
+        rest("/example-openshift").description(env.getProperty("api.description"))        	
             .consumes("application/json")
             .produces("application/json")
+            
         
          .get().description(env.getProperty("api.description.service")).outType(Response.class)
             .responseMessage().code(200).message("All users successfully returned").endResponseMessage()
             .to("direct:listAllUsers")
-         .post().description(env.getProperty("api.description.service")).type(Request.class).description(
-             env.getProperty("api.description.input.post")).outType(Response.class) 
+         .post().description(env.getProperty("api.description.service"))      	
+             .type(Request.class).description(env.getProperty("api.description.input.post")).outType(Response.class)     	
              .responseMessage().code(200).message("All users successfully created").endResponseMessage()
              .to("direct:createUser")
-         .put().description(env.getProperty("api.description.service")).type(Request.class).description(
+         .put("/{document}").description(env.getProperty("api.description.service")).type(Request.class).description(
              env.getProperty("api.description.input.post")).outType(Response.class) 
 	         .param()
 				.dataType("string")
@@ -68,7 +69,7 @@ public class RestDslMainRoute extends RouteBuilder {
 			 .endParam()
              .responseMessage().code(200).message("All users successfully created").endResponseMessage()
              .to("direct:updateUser")
-         .delete().description(env.getProperty("api.description.service")).type(Request.class).description(
+         .delete("/{document}").description(env.getProperty("api.description.service")).type(Request.class).description(
              env.getProperty("api.description.input.post")).outType(Response.class)
          	.param()
          		.dataType("string")
