@@ -77,7 +77,7 @@ public class RestDslMainRoute extends RouteBuilder {
          		.type(RestParamType.path)
      		 .endParam()
              .responseMessage().code(200).message("All users successfully created").endResponseMessage()
-             .to("direct:delete-user")
+             .to("direct:deleteUser")
              ;
   
         
